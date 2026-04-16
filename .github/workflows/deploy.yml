@@ -26,7 +26,9 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.ACR_LOGIN_SERVER }}/my-react-app:${{ github.sha }} .
+          docker build \
+            --build-arg VITE_APP_TITLE="My Deployed React App"\
+            -t ${{ secrets.ACR_LOGIN_SERVER }}/my-react-app:${{ github.sha }} . 
           docker push ${{ secrets.ACR_LOGIN_SERVER }}/my-react-app:${{ github.sha }}
 
       - name: Deploy to Azure Web App

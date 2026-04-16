@@ -10,6 +10,10 @@ RUN npm ci
 
 COPY . .
 
+ARG VITE_APP_TITLE
+
+ENV VITE_APP_TITLE=${VITE_APP_TITLE}
+
 RUN npm run build
 
 # This is stage 2, creating production serving image
