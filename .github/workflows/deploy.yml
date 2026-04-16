@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -33,7 +34,7 @@ jobs:
           az webapp config container set \
             --name my-react-docker-demo-syafiq \
             --resource-group rg-react-docker-demo \
-            --image ${{ secrets.ACR_LOGIN_SERVER }}/my-react-app:${{ github.sha }} \
-            --registry-server https://${{ secrets.ACR_LOGIN_SERVER }} \
-            --registry-username ${{ secrets.ACR_USERNAME }} \
-            --registry-password ${{ secrets.ACR_PASSWORD }}
+            --docker-custom-image-name ${{ secrets.ACR_LOGIN_SERVER }}/my-react-app:${{ github.sha }} \
+            --docker-registry-server-url https://${{ secrets.ACR_LOGIN_SERVER }} \
+            --docker-registry-server-user ${{ secrets.ACR_USERNAME }} \
+            --docker-registry-server-password ${{ secrets.ACR_PASSWORD }}
