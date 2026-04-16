@@ -29,7 +29,11 @@ jobs:
           docker push ${{ secrets.ACR_LOGIN_SERVER }}/my-react-app:${{ github.sha }}
 
       - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: my-react-docker-demo-syafiq
-          images: ${{ secrets.ACR_LOGIN_SERVER }}/my-react-app:${{ github.sha }}
+        run: |
+          az webapp config container set \
+            --name my-react-docker-demo-syafiq \
+            --resource-group rg-react-docker-demo \
+            --image ${{ secrets.ACR_LOGIN_SERVER }}/my-react-app:${{ github.sha }} \
+            --registry-server https://${{ secrets.ACR_LOGIN_SERVER }} \
+            --registry-username ${{ secrets.ACR_USERNAME }} \
+            --registry-password ${{ secrets.ACR_PASSWORD }}
